@@ -6,6 +6,26 @@
 <title>White Tiger — Zero Click AI Automations</title>
 <meta name="description" content="We fully automate your business. Zero setup, zero hassle, zero clicks. On-location AI automation services in Ahmedabad, Vadodara and Surat.">
 <meta name="theme-color" content="#1d8cb8">
+
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://whitetigerai.in/">
+<meta property="og:site_name" content="White Tiger AI">
+<meta property="og:title" content="White Tiger — Zero Click AI Automations">
+<meta property="og:description" content="We fully automate your business. Zero setup, zero hassle, zero clicks. On-location AI automation services in Ahmedabad, Vadodara and Surat.">
+<meta property="og:image" content="https://whitetigerai.in/assets/og-image.jpg">
+<meta property="og:image:secure_url" content="https://whitetigerai.in/assets/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A white tiger with piercing blue eyes and sabertooth fangs in a snowy mountain landscape">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="White Tiger — Zero Click AI Automations">
+<meta name="twitter:description" content="We fully automate your business. Zero setup, zero hassle, zero clicks.">
+<meta name="twitter:image" content="https://whitetigerai.in/assets/og-image.jpg">
+<meta name="twitter:image:alt" content="A white tiger with piercing blue eyes and sabertooth fangs in a snowy mountain landscape">
 <meta name="color-scheme" content="light only">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -375,9 +395,12 @@ nav {
 }
 .hero-tiger {
   position: relative;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100vw;
+  max-width: none;
+  /* Break out of the section's horizontal padding so the video
+     reaches edge-to-edge like the tiger break sections below. */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   z-index: 2;
   /* Subtle cursor-driven parallax on the hero tiger */
   --hero-shift-x: calc((var(--cxn) - 0.5) * 16px);
@@ -723,31 +746,37 @@ h2 .ice {
   margin-bottom: 12px;
   text-transform: uppercase;
 }
-/* Category title — subtle sweeping shimmer that flows ACROSS the text
-   and exits, instead of two stuck radial highlights. The base stays
-   solid brand color most of the cycle so readability of the small
-   sub-label and description nearby stays clean. */
-.cat-head h3 {
+/* Smaller card titles across the site — very subtle, almost-white
+   with just a hint of brand blue. A barely-there lighter band
+   sweeps across so there's still life, but readability of the
+   surrounding small text stays the priority. Applied to category
+   titles in What We Automate, Beyond Automations card titles, and
+   FAQ question rows. */
+.cat-head h3,
+.beyond-card h4,
+.faq-item summary {
   font-family: 'Archivo Black', sans-serif;
-  font-size: 28px;
-  line-height: 1.05;
-  letter-spacing: -0.012em;
   text-transform: uppercase;
   background: linear-gradient(115deg,
-    var(--brand-deep) 0%,
-    var(--brand-deep) 38%,
-    var(--brand) 47%,
-    var(--brand-bright) 50%,
-    var(--brand) 53%,
-    var(--brand-deep) 62%,
-    var(--brand-deep) 100%);
+    #8fc4dc 0%,
+    #8fc4dc 38%,
+    #b6d8ec 47%,
+    #d8eaf3 50%,
+    #b6d8ec 53%,
+    #8fc4dc 62%,
+    #8fc4dc 100%);
   background-size: 320% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  animation: catHeadSweep 14s linear infinite;
+  animation: catHeadSweep 16s linear infinite;
   filter: none;
+}
+.cat-head h3 {
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
 }
 @keyframes catHeadSweep {
   0%   { background-position: 280% 0%; }
@@ -1207,6 +1236,15 @@ footer .copyright { margin-top: 14px; font-size: 11px; opacity: 0.5; }
   .hero-cities::before, .hero-cities::after { width: 24px; }
   .contact-card { padding: 60px 28px; border-radius: 28px; }
 }
+@media (max-width: 700px) {
+  /* Force the hero headline onto a single line on mobile */
+  .hero-content h1 {
+    font-size: clamp(18px, 5.6vw, 32px);
+    white-space: nowrap;
+    letter-spacing: -0.045em;
+  }
+  .hero-content h1 br { display: none; }
+}
 @media (max-width: 540px) {
   .price-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
@@ -1333,7 +1371,7 @@ section h2,
     </video>
   </div>
   <div class="hero-content">
-    <h1>ZERO CLICK<br><span class="ice">AI AUTOMATIONS</span></h1>
+    <h1>ZERO CLICK<br> <span class="ice">AI AUTOMATIONS</span></h1>
     <p class="hero-tagline">Zero setup. Zero hassle. Zero clicks. We will fully automate your business — installed in person, on your machine, on your terms.</p>
     <div class="hero-cities">AHMEDABAD · VADODARA · SURAT</div>
     <div class="hero-cta">
