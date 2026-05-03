@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>White Tiger — Zero Click AI Automations</title>
+<meta name="description" content="We fully automate your business. Zero setup, zero hassle, zero clicks. On-location AI automation services in Ahmedabad, Vadodara and Surat.">
+<meta name="theme-color" content="#1d8cb8">
+<meta name="color-scheme" content="light only">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ========================================================
+   WHITE TIGER — LIQUID GLASS DESIGN SYSTEM
+   ======================================================== */
+:root {
+  /* SNOW BACKDROP */
+  --snow:        #eef3f8;
+  --snow-2:      #e3ebf2;
+  --snow-3:      #d6e0e9;
+  --snow-bright: #f8fbfd;
+
+  /* INK */
+  --ink:    #0a0a0a;
+  --ink-2:  #1a1a1a;
+  --ink-3:  #4a5560;
+
+  /* BRAND BLUE — the hero gradient */
+  --brand:        #1d8cb8;
+  --brand-bright: #5fb8e0;
+  --brand-pale:   #aee0f5;
+  --brand-deep:   #0e6a8f;
+  --brand-glow:   rgba(95, 184, 224, 0.55);
+  --brand-glow-2: rgba(29, 140, 184, 0.35);
+
+  /* GLASS */
+  --glass-bg:        rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.72);
+  --glass-bg-dark:   rgba(255, 255, 255, 0.18);
+  --glass-border:    rgba(255, 255, 255, 0.6);
+  --glass-line:      rgba(120, 145, 170, 0.18);
+  --glass-shadow:    0 14px 40px -12px rgba(20, 50, 80, 0.18),
+                     0 4px 12px -4px rgba(20, 50, 80, 0.10),
+                     inset 0 1px 0 rgba(255, 255, 255, 0.85),
+                     inset 0 -1px 0 rgba(120, 145, 170, 0.08);
+  --glass-shadow-hover:
+                     0 24px 60px -14px rgba(20, 80, 120, 0.30),
+                     0 8px 20px -6px rgba(29, 140, 184, 0.18),
+                     inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                     inset 0 -1px 0 rgba(29, 140, 184, 0.08);
+  --blur:            blur(24px) saturate(180%);
+  --blur-strong:     blur(36px) saturate(200%);
+
+  /* CURSOR — set by JS */
+  --cx: 50vw;
+  --cy: 50vh;
+  --cxn: 0.5;
+  --cyn: 0.5;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+*::selection { background: var(--brand); color: white; }
+
+html {
+  scroll-behavior: smooth;
+  background: #e8f1f7;
+  color-scheme: light only;          /* opt out of browser auto-dark */
+  -webkit-color-scheme: light only;
+  forced-color-adjust: none;
+}
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+  background: transparent;
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: default;
+}
+
+/* ========== SUBTLE SNOW + AURORA BACKGROUND ==========
+   Soft pale snow gradient with a barely-there brand-blue
+   aurora drifting across the page. Restored to the more
+   restrained version per user feedback. */
+.bg-snow {
+  position: fixed; inset: 0; z-index: -3;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%, var(--snow-bright) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 30%, rgba(95, 184, 224, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 70%, rgba(29, 140, 184, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, var(--snow) 0%, var(--snow-2) 100%);
+}
+.bg-aurora {
+  position: fixed; inset: -10%; z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at calc(20% + var(--cxn) * 12%) calc(30% + var(--cyn) * 10%), rgba(95, 184, 224, 0.16), transparent 35%),
+    radial-gradient(circle at calc(80% - var(--cxn) * 12%) calc(70% - var(--cyn) * 10%), rgba(29, 140, 184, 0.12), transparent 35%);
+  animation: auroraDrift 24s ease-in-out infinite alternate;
+  transition: background 0.8s ease-out;
+  filter: blur(20px);
+}
+@keyframes auroraDrift {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(-2%, 1.5%) scale(1.05); }
+  100% { transform: translate(2%, -1.5%) scale(1); }
+}
+
+/* Snow canvas */
+#snow {
+  position: fixed; inset: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none; z-index: 4;
+}
+
+/* ========================================================
+   GLASS UTILITIES
+   ======================================================== */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 22px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+              border-color 0.4s ease;
+}
+.glass::before {
+  /* The cursor-following sheen: a soft brand-blue radial spotlight */
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle 280px at var(--mx, -200px) var(--my, -200px), var(--brand-glow), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: screen;
+}
+.glass::after {
+  /* The top specular highlight */
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 100%);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+.glass:hover {
+  transform: translateY(-3px);
+  border-color: rgba(95, 184, 224, 0.45);
+  box-shadow: var(--glass-shadow-hover);
+  animation: none;
+}
+.glass:hover::before { opacity: 1; }
+.glass > * { position: relative; z-index: 2; }
+
+/* ELECTRIC BORDER HALO — tight, diffused, constantly orbiting
+   8 keyframe positions (cardinal + diagonals) so the bright currents
+   flow smoothly around the full perimeter without obvious stops.
+   Two currents travel in opposite directions, meeting at 4 points/cycle. */
+@keyframes brandHalo {
+  /* Always-on layers in every frame:
+     - base drop shadows
+     - diffused brand-blue glow tight to border
+     - thin brand-blue inner ring
+     - top + bottom inner highlights
+     Only the last two shadows (the currents) move. */
+  0%    { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 -3px 9px 0 rgba(174,224,245,0.85),  0 3px 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+  12.5% { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  2px -2px 9px 0 rgba(174,224,245,0.85),  -2px 2px 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+  25%   { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  3px 0 9px 0 rgba(174,224,245,0.85),  -3px 0 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+  37.5% { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  2px 2px 9px 0 rgba(174,224,245,0.85),  -2px -2px 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+  50%   { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 3px 9px 0 rgba(174,224,245,0.85),  0 -3px 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+  62.5% { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -2px 2px 9px 0 rgba(174,224,245,0.85),  2px -2px 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+  75%   { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -3px 0 9px 0 rgba(174,224,245,0.85),  3px 0 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+  87.5% { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -2px -2px 9px 0 rgba(174,224,245,0.85),  2px 2px 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+  100%  { box-shadow: 0 14px 40px -12px rgba(20,50,80,0.18), 0 4px 12px -4px rgba(20,50,80,0.10), 0 0 14px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 -3px 9px 0 rgba(174,224,245,0.85),  0 3px 9px 0 rgba(174,224,245,0.75), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(120,145,170,0.08); }
+}
+.glass {
+  animation: brandHalo 7s linear infinite;
+}
+
+/* Buttons / nav — same 8-position orbit, smaller scale */
+@keyframes brandHaloSmall {
+  0%    { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 -2px 7px 0 rgba(174,224,245,0.80),  0 2px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+  12.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  1.5px -1.5px 7px 0 rgba(174,224,245,0.80),  -1.5px 1.5px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+  25%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  2px 0 7px 0 rgba(174,224,245,0.80),  -2px 0 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+  37.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  1.5px 1.5px 7px 0 rgba(174,224,245,0.80),  -1.5px -1.5px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+  50%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 2px 7px 0 rgba(174,224,245,0.80),  0 -2px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+  62.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -1.5px 1.5px 7px 0 rgba(174,224,245,0.80),  1.5px -1.5px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+  75%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -2px 0 7px 0 rgba(174,224,245,0.80),  2px 0 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+  87.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -1.5px -1.5px 7px 0 rgba(174,224,245,0.80),  1.5px 1.5px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+  100%  { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 -2px 7px 0 rgba(174,224,245,0.80),  0 2px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
+}
+@keyframes brandHaloLight {
+  0%    { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  0 -2px 7px 0 rgba(174,224,245,0.75),  0 2px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+  12.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  1.5px -1.5px 7px 0 rgba(174,224,245,0.75),  -1.5px 1.5px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+  25%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  2px 0 7px 0 rgba(174,224,245,0.75),  -2px 0 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+  37.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  1.5px 1.5px 7px 0 rgba(174,224,245,0.75),  -1.5px -1.5px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+  50%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  0 2px 7px 0 rgba(174,224,245,0.75),  0 -2px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+  62.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  -1.5px 1.5px 7px 0 rgba(174,224,245,0.75),  1.5px -1.5px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+  75%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  -2px 0 7px 0 rgba(174,224,245,0.75),  2px 0 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+  87.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  -1.5px -1.5px 7px 0 rgba(174,224,245,0.75),  1.5px 1.5px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+  100%  { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  0 -2px 7px 0 rgba(174,224,245,0.75),  0 2px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
+}
+
+/* MORE TRANSPARENT SMALL CARDS — let the brand color flow through */
+.auto-card.glass,
+.faq-item.glass,
+.step.glass,
+.price-card.glass,
+.beyond-card.glass,
+.caveat.glass {
+  background: rgba(255, 255, 255, 0.32);
+}
+.auto-card.glass:hover,
+.faq-item.glass:hover,
+.step.glass:hover,
+.price-card.glass:hover,
+.beyond-card.glass:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* SECTION GLASS — large frosted panel that fades softly into the page
+   at all edges so it doesn't read as a hard rectangular box.
+   No explicit border. Mask-image creates a soft top/bottom feather. */
+.section-glass {
+  position: relative;
+  z-index: 10;
+}
+.section-glass::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  background: rgba(255, 255, 255, 0.36);
+  -webkit-backdrop-filter: blur(36px) saturate(190%);
+  backdrop-filter: blur(36px) saturate(190%);
+  border: none;
+  border-radius: 0;
+  /* Soft fade at top + bottom edges so the panel melts into the surrounding
+     space. No hard box outline anywhere. */
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent 0%,
+    rgba(0,0,0,0.6) 8%,
+    black 22%,
+    black 78%,
+    rgba(0,0,0,0.6) 92%,
+    transparent 100%);
+  mask-image: linear-gradient(180deg,
+    transparent 0%,
+    rgba(0,0,0,0.6) 8%,
+    black 22%,
+    black 78%,
+    rgba(0,0,0,0.6) 92%,
+    transparent 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+.section-glass > * { position: relative; z-index: 1; }
+
+/* ========================================================
+   NAV
+   ======================================================== */
+nav {
+  position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px 10px 22px;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: var(--blur-strong);
+  backdrop-filter: var(--blur-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  box-shadow: var(--glass-shadow);
+  width: min(960px, calc(100vw - 28px));
+  transition: padding 0.3s ease, top 0.3s ease, width 0.3s ease;
+}
+.logo {
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-text {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.logo-main {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+.logo-sub {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  color: var(--brand-deep);
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+.logo-dot {
+  display: inline-block;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-bright), var(--brand-deep));
+  box-shadow: 0 0 12px var(--brand-glow);
+  animation: pulseDot 2.6s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 8px var(--brand-glow); transform: scale(1); }
+  50%      { box-shadow: 0 0 18px var(--brand-glow); transform: scale(1.2); }
+}
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 20px;
+  background: rgba(255, 255, 255, 0.32);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  animation: brandHaloLight 6s linear infinite;
+  transition: all 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.nav-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(29, 140, 184, 0.85) 0%, rgba(95, 184, 224, 0.75) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+.nav-cta:hover {
+  background: rgba(255, 255, 255, 0.55);
+  color: white;
+  transform: translateY(-1px);
+  border-color: rgba(95, 184, 224, 0.7);
+  animation: none;
+  box-shadow: 0 14px 32px -4px var(--brand-glow),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.nav-cta:hover::before { opacity: 1; }
+.nav-cta span { position: relative; z-index: 2; }
+
+/* ========================================================
+   HERO
+   ======================================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  padding: 100px 24px 60px;
+  overflow: hidden;
+  z-index: 10;
+}
+.hero-tiger {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  z-index: 2;
+  /* Subtle cursor-driven parallax on the hero tiger */
+  --hero-shift-x: calc((var(--cxn) - 0.5) * 16px);
+  --hero-shift-y: calc((var(--cyn) - 0.5) * 8px);
+}
+.hero-tiger video,
+.hero-tiger img {
+  width: 100%;
+  height: auto;
+  display: block;
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  filter: contrast(1.05) saturate(1.05);
+  transform: translate3d(var(--hero-shift-x), var(--hero-shift-y), 0);
+  transition: transform 0.4s cubic-bezier(0.15, 0.7, 0.2, 1);
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 3;
+  margin-top: -40px;
+  padding: 0 24px;
+  position: relative;
+}
+.hero-content h1 {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: clamp(48px, 8.6vw, 132px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+.hero-content h1 .ice {
+  background: linear-gradient(110deg, var(--brand-bright) 0%, var(--brand-deep) 50%, var(--brand-bright) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brandShine 6s linear infinite;
+  display: inline-block;
+}
+@keyframes brandShine {
+  0%   { background-position: 220% 0%; }
+  100% { background-position: -120% 0%; }
+}
+.hero-tagline {
+  margin: 26px auto 0;
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 500;
+  color: var(--ink-3);
+  max-width: 600px;
+}
+.hero-cities {
+  margin-top: 36px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  color: var(--ink);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+.hero-cities::before, .hero-cities::after {
+  content: '';
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ink), transparent);
+}
+.hero-cta {
+  margin-top: 40px;
+  display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 28px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  isolation: isolate;
+}
+.btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle 200px at var(--mx, -200px) var(--my, -200px), rgba(255,255,255,0.4), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: -1;
+}
+.btn:hover::before { opacity: 1; }
+.btn-primary {
+  background: rgba(255, 255, 255, 0.42);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.7);
+  animation: brandHaloLight 6s linear infinite;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, rgba(29, 140, 184, 0.80) 0%, rgba(95, 184, 224, 0.72) 100%);
+  color: white;
+  border-color: rgba(174, 224, 245, 0.8);
+  transform: translateY(-2px);
+  animation: none;
+  box-shadow: 0 18px 40px -6px var(--brand-glow),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.32);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.6);
+  animation: brandHaloLight 6s linear infinite;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: var(--brand-bright);
+  color: var(--brand-deep);
+  transform: translateY(-2px);
+  animation: none;
+  box-shadow: 0 16px 36px -6px var(--brand-glow),
+              inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* ========================================================
+   SECTIONS
+   ======================================================== */
+section {
+  position: relative;
+  padding: 120px 24px;
+  z-index: 10;
+}
+.container { max-width: 1200px; margin: 0 auto; }
+
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--brand-deep);
+  padding: 7px 14px 7px 12px;
+  background: var(--glass-bg);
+  border: 1px solid rgba(95, 184, 224, 0.4);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border-radius: 999px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 16px -6px var(--brand-glow-2);
+}
+.section-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 8px var(--brand-glow);
+  animation: pulseDot 2.4s ease-in-out infinite;
+}
+
+h2 {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: clamp(36px, 5.6vw, 80px);
+  line-height: 0.94;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+h2 .ice {
+  background: linear-gradient(110deg, var(--brand-bright), var(--brand-deep), var(--brand-bright));
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brandShine 6s linear infinite;
+}
+
+/* ========================================================
+   PROBLEM
+   ======================================================== */
+.problem { text-align: center; }
+.problem h2 { max-width: 1100px; margin: 0 auto; }
+.problem .lead {
+  margin: 32px auto 0;
+  font-size: clamp(17px, 1.6vw, 22px);
+  color: var(--ink-3);
+  font-weight: 500;
+  max-width: 720px;
+}
+.big-stat-card {
+  margin: 70px auto 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 50px 70px;
+  border-radius: 32px;
+}
+.big-stat-card .num {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: clamp(80px, 14vw, 200px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--brand-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.big-stat-card .label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+/* Dash inside the big stat — gives the en-dash room to breathe.
+   Without this, "20–48" reads as cramped because Archivo Black's
+   en-dash sits low and tight to the digits. */
+.big-stat-card .num .num-dash {
+  display: inline-block;
+  margin: 0 0.08em;
+  vertical-align: 0.04em;
+  font-weight: normal;
+}
+
+/* ========================================================
+   PULL QUOTE — bold statement that sets up each tiger video
+   ======================================================== */
+.pull-quote {
+  padding: 70px 24px 50px;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+.pull-quote .pq-text {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: clamp(30px, 5vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-transform: uppercase;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.pull-quote .accent {
+  background: linear-gradient(110deg, var(--brand-bright), var(--brand-deep), var(--brand-bright));
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brandShine 6s linear infinite;
+}
+
+/* ========================================================
+   TIGER BREAK SECTIONS — pure cinematic full-bleed video, NO overlay
+   ======================================================== */
+.tiger-break {
+  position: relative;
+  height: 92vh;
+  min-height: 600px;
+  padding: 0;
+  margin-top: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tiger-break .tb-media {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  /* Cursor parallax */
+  --tb-shift-x: calc((var(--cxn) - 0.5) * 28px);
+  --tb-shift-y: calc((var(--cyn) - 0.5) * 18px);
+  transform: translate3d(var(--tb-shift-x), var(--tb-shift-y), 0) scale(1.10);
+  transition: transform 0.6s cubic-bezier(0.15, 0.7, 0.2, 1);
+}
+.tiger-break .tb-media video,
+.tiger-break .tb-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Soft edge fade only at the very top + bottom so the video bleeds into the snow background.
+   No center darkening, no horizontal vignette — the tiger is the focus, completely unobscured. */
+.tiger-break::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--snow) 0%, transparent 8%, transparent 92%, var(--snow) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ========================================================
+   AUTOMATIONS
+   ======================================================== */
+.automations-header { text-align: center; margin-bottom: 40px; }
+.caveat {
+  margin: 24px auto 0;
+  max-width: 760px;
+  padding: 22px 26px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink-2);
+  border-radius: 18px;
+  text-align: left;
+}
+.caveat::before {
+  /* Use the glass effect via wrapper class; this is a special caveat glass */
+  display: none;
+}
+.caveat strong { color: var(--ink); font-weight: 800; background: linear-gradient(180deg, transparent 60%, rgba(95, 184, 224, 0.35) 60%); padding: 0 2px; }
+
+.cat-grid {
+  margin-top: 70px;
+  display: grid;
+  gap: 56px;
+}
+.category {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 50px;
+  align-items: start;
+}
+.cat-head .cat-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  color: var(--brand-deep);
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+/* Category title — subtle sweeping shimmer that flows ACROSS the text
+   and exits, instead of two stuck radial highlights. The base stays
+   solid brand color most of the cycle so readability of the small
+   sub-label and description nearby stays clean. */
+.cat-head h3 {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  background: linear-gradient(115deg,
+    var(--brand-deep) 0%,
+    var(--brand-deep) 38%,
+    var(--brand) 47%,
+    var(--brand-bright) 50%,
+    var(--brand) 53%,
+    var(--brand-deep) 62%,
+    var(--brand-deep) 100%);
+  background-size: 320% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: catHeadSweep 14s linear infinite;
+  filter: none;
+}
+@keyframes catHeadSweep {
+  0%   { background-position: 280% 0%; }
+  100% { background-position: -180% 0%; }
+}
+.cat-head p {
+  margin-top: 16px;
+  font-size: 14.5px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+.cat-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+.auto-card {
+  padding: 22px 22px 18px;
+  border-radius: 18px;
+}
+.auto-card h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brand-deep);
+  -webkit-text-fill-color: var(--brand-deep);
+  background: none;
+  animation: none;
+  filter: none;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+.auto-card p {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+.auto-card .freed {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--brand-deep);
+  text-transform: uppercase;
+  padding-top: 12px;
+  border-top: 1px solid var(--glass-line);
+  display: block;
+  position: relative;
+}
+.auto-card .freed::before {
+  content: '';
+  position: absolute; left: 0; top: -1px; width: 30px; height: 2px;
+  background: linear-gradient(90deg, var(--brand-bright), var(--brand-deep));
+  border-radius: 2px;
+}
+
+/* ========================================================
+   HOW IT WORKS
+   ======================================================== */
+.how-header { text-align: center; margin-bottom: 70px; }
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  counter-reset: step;
+}
+.step {
+  position: relative;
+  padding: 36px 28px 32px;
+  border-radius: 22px;
+}
+/* Step counter removed per user — was rendering inconsistently behind hover state */
+.step h4 {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 21px;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 12px;
+  letter-spacing: -0.012em;
+  color: var(--brand-deep);
+  -webkit-text-fill-color: var(--brand-deep);
+  background: none;
+  animation: none;
+  filter: none;
+}
+.step p {
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+.step .note {
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--brand-deep);
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(95, 184, 224, 0.15);
+  border: 1px solid rgba(95, 184, 224, 0.4);
+  border-radius: 999px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ========================================================
+   PRICING
+   ======================================================== */
+.pricing-header { text-align: center; margin-bottom: 70px; }
+.pricing-header .anchor {
+  margin-top: 30px;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: clamp(50px, 7.5vw, 100px);
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+.pricing-header .anchor .rupee {
+  background: linear-gradient(110deg, var(--brand-bright), var(--brand-deep), var(--brand-bright));
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brandShine 6s linear infinite;
+}
+.pricing-header .anchor-sub {
+  margin-top: 14px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 30px;
+}
+.price-card {
+  padding: 32px 24px;
+  border-radius: 22px;
+}
+.price-card .label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brand-deep);
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+.price-card .amount {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 38px;
+  letter-spacing: -0.028em;
+  line-height: 1;
+  color: var(--brand-deep);
+}
+.price-card .amount .unit {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-deep);
+  opacity: 0.7;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.price-card .desc {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.55;
+}
+.price-note {
+  padding: 22px 26px;
+  font-size: 15px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  border-radius: 18px;
+}
+.price-note strong { color: var(--ink); }
+.price-note::after {
+  /* Replace top-bar accent on the left edge */
+}
+
+/* ========================================================
+   BEYOND
+   ======================================================== */
+.beyond-header { text-align: center; margin-bottom: 70px; }
+.beyond-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.beyond-card {
+  padding: 40px 36px;
+  border-radius: 22px;
+}
+.beyond-card h4 {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: -0.012em;
+  line-height: 1.05;
+  margin-bottom: 14px;
+}
+.beyond-card p {
+  color: var(--ink-3);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.beyond-card .price-line {
+  margin-top: 18px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--brand-deep);
+  text-transform: uppercase;
+}
+
+/* ========================================================
+   FAQ
+   ======================================================== */
+.faq-header { text-align: center; margin-bottom: 50px; }
+.faq-list {
+  max-width: 920px;
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+}
+.faq-item {
+  padding: 0;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: clamp(17px, 2vw, 23px);
+  text-transform: uppercase;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  position: relative;
+  z-index: 2;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+/* FAQ items use static glass — no orbiting halo, calmer for reading */
+.faq-item.glass {
+  animation: none;
+  box-shadow: var(--glass-shadow);
+}
+.faq-item.glass:hover {
+  animation: none;
+}
+
+/* Plus icon — drawn from two centered pseudo-element bars
+   so the cross is mathematically aligned regardless of font. */
+.faq-item summary .plus {
+  position: relative;
+  font-size: 0;          /* hide the literal "+" text */
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  background: rgba(95, 184, 224, 0.12);
+  border-radius: 50%;
+  border: 1px solid rgba(95, 184, 224, 0.35);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+              background 0.3s ease,
+              border-color 0.3s ease;
+}
+.faq-item summary .plus::before,
+.faq-item summary .plus::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  background: var(--brand-deep);
+  border-radius: 1px;
+  transition: background 0.3s ease;
+}
+.faq-item summary .plus::before {
+  width: 14px; height: 2px;
+  transform: translate(-50%, -50%);
+}
+.faq-item summary .plus::after {
+  width: 2px; height: 14px;
+  transform: translate(-50%, -50%);
+}
+.faq-item[open] summary .plus {
+  transform: rotate(45deg);
+  background: var(--brand);
+  border-color: var(--brand);
+}
+.faq-item[open] summary .plus::before,
+.faq-item[open] summary .plus::after {
+  background: white;
+}
+.faq-item .answer {
+  padding: 0 28px 26px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink-3);
+  max-width: 760px;
+  position: relative; z-index: 2;
+}
+.faq-item .answer strong { color: var(--ink); }
+
+/* ========================================================
+   CONTACT (dark)
+   ======================================================== */
+.contact {
+  background: linear-gradient(180deg, var(--snow) 0%, transparent 4%);
+  padding: 140px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.contact-card {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 90px 60px;
+  text-align: center;
+  border-radius: 36px;
+  background:
+    radial-gradient(ellipse at 25% 30%, rgba(29, 140, 184, 0.35), transparent 50%),
+    radial-gradient(ellipse at 75% 70%, rgba(95, 184, 224, 0.18), transparent 50%),
+    linear-gradient(180deg, #0d1218 0%, #050708 100%);
+  border: 1px solid rgba(95, 184, 224, 0.25);
+  box-shadow:
+    0 30px 80px -20px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.contact-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle 400px at var(--mx, 50%) var(--my, 50%), rgba(95, 184, 224, 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: 0;
+}
+.contact-card:hover::before { opacity: 1; }
+.contact-card > * { position: relative; z-index: 2; }
+.contact h2 {
+  color: white;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.contact h2 .ice {
+  background: linear-gradient(110deg, var(--brand-pale), var(--brand-bright), var(--brand-pale));
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brandShine 6s linear infinite;
+}
+.contact .sub {
+  margin-top: 28px;
+  color: #b8c2cc;
+  font-size: 17px;
+  max-width: 640px;
+  margin-left: auto; margin-right: auto;
+}
+.contact-cta {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.contact .btn-primary {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
+  color: white;
+  box-shadow: 0 10px 28px -6px var(--brand-glow), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.contact .btn-primary:hover {
+  background: linear-gradient(135deg, var(--brand-bright) 0%, var(--brand) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -6px var(--brand-glow);
+}
+.contact .btn-secondary {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  border-color: rgba(255,255,255,0.25);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+}
+.contact .btn-secondary:hover {
+  background: linear-gradient(135deg, rgba(95, 184, 224, 0.35) 0%, rgba(29, 140, 184, 0.30) 100%);
+  border-color: var(--brand-bright);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -6px var(--brand-glow),
+              inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+.contact .section-eyebrow {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(95, 184, 224, 0.4);
+  color: var(--brand-bright);
+}
+
+/* ========================================================
+   FOOTER
+   ======================================================== */
+footer {
+  padding: 50px 24px 40px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+}
+footer .logo { color: var(--ink); margin-bottom: 12px; display: inline-flex; }
+footer p { margin-top: 6px; opacity: 0.8; }
+footer .copyright { margin-top: 14px; font-size: 11px; opacity: 0.5; }
+
+/* ========================================================
+   REVEAL ANIMATIONS
+   ======================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+
+/* ========================================================
+   RESPONSIVE
+   ======================================================== */
+@media (max-width: 900px) {
+  nav { padding: 8px 8px 8px 16px; top: 10px; }
+  .logo { font-size: 14px; letter-spacing: 0.12em; }
+  .nav-cta { padding: 8px 14px; font-size: 11px; letter-spacing: 0.1em; }
+  section { padding: 90px 18px; }
+  .hero { padding-top: 90px; }
+  .hero-content { margin-top: -20px; }
+  .category { grid-template-columns: 1fr; gap: 24px; }
+  .steps { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .price-grid { grid-template-columns: repeat(2, 1fr); }
+  .beyond-grid { grid-template-columns: 1fr; }
+  .tiger-break { height: 75vh; min-height: 460px; }
+  .tiger-break blockquote { padding: 28px 24px; margin: 0 16px; }
+  .hero-cities { font-size: 11px; gap: 10px; letter-spacing: 0.3em; }
+  .hero-cities::before, .hero-cities::after { width: 24px; }
+  .contact-card { padding: 60px 28px; border-radius: 28px; }
+}
+@media (max-width: 540px) {
+  .price-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; }
+  .big-stat-card { padding: 36px 28px; }
+}
+
+/* ========================================================
+   LIQUID GLASS TITLE TEXT — drift WITHIN the text
+   Two soft brand-color highlights orbit independently inside
+   each title's shape. The base is always a pale brand blue
+   so the text never disappears against white. Highlights are
+   brand-pale → brand-bright (no pure white). Slow non-syncing
+   cycles (24s + 32s) feel organic, never repeat predictably.
+   ======================================================== */
+/* Highlights spend most of their cycle OFF the text bounds, then
+   slowly drift through. So the text reads as pure brand color most
+   of the time, with only momentary lighter passes — slow but transient. */
+@property --h1x { syntax: '<percentage>'; inherits: false; initial-value: 130%; }
+@property --h1y { syntax: '<percentage>'; inherits: false; initial-value: -30%; }
+@property --h2x { syntax: '<percentage>'; inherits: false; initial-value: -30%; }
+@property --h2y { syntax: '<percentage>'; inherits: false; initial-value: 130%; }
+
+@keyframes titleDrift1 {
+  /* Highlight travels slowly from top-right corner, diagonally through
+     the text, exits at bottom-left. Most of the cycle (60%+) it's
+     well outside the text bounds. */
+  0%   { --h1x: 135%; --h1y: -35%; }
+  35%  { --h1x: 90%; --h1y: 5%; }      /* still mostly outside */
+  50%  { --h1x: 50%; --h1y: 50%; }     /* peak — middle of text */
+  65%  { --h1x: 10%; --h1y: 95%; }     /* mostly outside */
+  100% { --h1x: -35%; --h1y: 135%; }   /* off-screen, then teleports back */
+}
+@keyframes titleDrift2 {
+  /* Counter-current — same idea, opposite diagonal. Different timing
+     so they don't peak together. */
+  0%   { --h2x: -35%; --h2y: 135%; }
+  40%  { --h2x: 10%; --h2y: 90%; }
+  55%  { --h2x: 50%; --h2y: 50%; }     /* peak — middle of text */
+  70%  { --h2x: 90%; --h2y: 10%; }
+  100% { --h2x: 135%; --h2y: -35%; }
+}
+
+/* Base titles — saturated brand-blue is dominant; light brand-pale
+   highlights only briefly pass through. Small concentrated spots,
+   not big blobs, so they read as transient flares.
+   NOTE: auto-card h4 is intentionally excluded — those titles are
+   too small for the animation to read as anything but jittery. */
+.hero-content h1,
+section h2,
+.beyond-card h4,
+.faq-item summary,
+.pull-quote .pq-text,
+.big-stat-card .num,
+.pricing-header .anchor {
+  background:
+    radial-gradient(ellipse 25% 35% at var(--h1x) var(--h1y),
+      var(--brand-pale) 0%,
+      rgba(174, 224, 245, 0.55) 30%,
+      transparent 65%),
+    radial-gradient(ellipse 22% 32% at var(--h2x) var(--h2y),
+      var(--brand-pale) 0%,
+      rgba(174, 224, 245, 0.5) 30%,
+      transparent 65%),
+    /* Always-saturated brand-blue base — dominant, never goes pale */
+    linear-gradient(135deg, var(--brand) 0%, var(--brand-bright) 50%, var(--brand) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: titleDrift1 28s ease-in-out infinite,
+             titleDrift2 36s ease-in-out infinite;
+  filter: drop-shadow(0 1px 2px rgba(15, 60, 90, 0.20));
+}
+
+/* Emphasis text — deeper brand base, brighter brand spots passing through.
+   Same momentary-flare behavior as base titles. */
+.ice,
+.pull-quote .accent,
+.pricing-header .anchor .rupee {
+  background:
+    radial-gradient(ellipse 25% 35% at var(--h1x) var(--h1y),
+      var(--brand-bright) 0%, var(--brand) 35%, transparent 65%),
+    radial-gradient(ellipse 22% 32% at var(--h2x) var(--h2y),
+      var(--brand-bright) 0%, var(--brand) 35%, transparent 65%),
+    linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 50%, var(--brand) 100%) !important;
+  background-size: auto !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: titleDrift1 28s ease-in-out infinite,
+             titleDrift2 36s ease-in-out infinite !important;
+  display: inline-block;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-snow"></div>
+<div class="bg-aurora"></div>
+<canvas id="snow"></canvas>
+
+<nav>
+  <a href="#top" class="logo">
+    <span class="logo-dot"></span>
+    <span class="logo-text">
+      <span class="logo-main">WHITE&nbsp;TIGER</span>
+      <span class="logo-sub">AI Automations &amp; Services</span>
+    </span>
+  </a>
+  <a href="https://wa.me/919104088116" class="nav-cta"><span>SCHEDULE A CALL →</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-tiger" id="heroTiger">
+    <video autoplay loop muted playsinline poster="assets/tiger_hero_b.webp" preload="auto">
+      <source src="assets/tiger_hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-content">
+    <h1>ZERO CLICK<br><span class="ice">AI AUTOMATIONS</span></h1>
+    <p class="hero-tagline">Zero setup. Zero hassle. Zero clicks. We will fully automate your business — installed in person, on your machine, on your terms.</p>
+    <div class="hero-cities">AHMEDABAD · VADODARA · SURAT</div>
+    <div class="hero-cta">
+      <a href="https://wa.me/919104088116" class="btn btn-primary">START WITH A CALL</a>
+      <a href="#what-we-automate" class="btn btn-secondary">SEE WHAT WE AUTOMATE</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem section-glass">
+  <div class="container">
+    <span class="section-eyebrow reveal">THE REAL PROBLEM</span>
+    <h2 class="reveal">YOUR EMPLOYEE IS WORKING<br>50 HOURS/WEEK DOING<br>5 DIFFERENT JOBS.</h2>
+    <p class="lead reveal">We automate the repetitive work so they can do one job — really well. Either they grow your business faster, or you don't need to hire that next person.</p>
+    <div class="big-stat-card glass reveal">
+      <div class="num">20<span class="num-dash">–</span>48</div>
+      <div class="label">HOURS SAVED · PER EMPLOYEE · PER WEEK</div>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE 1 -->
+<section class="pull-quote">
+  <p class="pq-text reveal">TASKS THAT NEEDED <span class="accent">FIVE PEOPLE</span><br>CAN NOW BE DONE BY <span class="accent">ONE</span>.</p>
+</section>
+<!-- TIGER BREAK 1: PROWL — pure cinematic, no overlay -->
+<section class="tiger-break">
+  <div class="tb-media">
+    <video autoplay loop muted playsinline poster="assets/tiger_prowl.webp" preload="metadata">
+      <source src="assets/tiger_prowl.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<!-- AUTOMATIONS -->
+<section class="automations section-glass" id="what-we-automate">
+  <div class="container">
+    <div class="automations-header">
+      <span class="section-eyebrow reveal">WHAT WE AUTOMATE</span>
+      <h2 class="reveal">A STARTING POINT,<br>NOT A LIMIT.</h2>
+      <div class="caveat glass reveal"><strong>These are examples.</strong> We design fully custom zero-click automations for any workflow you bring us — not just the ones listed below.</div>
+    </div>
+
+    <div class="cat-grid">
+
+      <div class="category reveal">
+        <div class="cat-head">
+          <div class="cat-num">SOCIAL & ADS</div>
+          <h3>Social Media & Advertising</h3>
+          <p>Replace the ₹8,000–30,000+/month Social Media Manager. Any employee with a computer can now run your entire social ops.</p>
+        </div>
+        <div class="cat-cards">
+          <div class="auto-card glass">
+            <h4>Meta Ads Manager</h4>
+            <p>Ad creation, copy testing, budget management, optimisation, weekly reporting.</p>
+            <span class="freed">10–15 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Instagram & Reels</h4>
+            <p>Captions, hashtags, optimal posting schedule, performance tracking.</p>
+            <span class="freed">5–7 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Google Ads Optimizer</h4>
+            <p>Keyword research, ad copy variations, bid management, reports.</p>
+            <span class="freed">4–6 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Ad Creative Generator</h4>
+            <p>Generates ad images and concepts, writes copy angles, tests hooks.</p>
+            <span class="freed">4–5 HRS SAVED / WEEK</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category reveal">
+        <div class="cat-head">
+          <div class="cat-num">SALES</div>
+          <h3>Sales</h3>
+          <p>Replace the Sales Admin. Your actual salesperson is free to close deals — not chase prospects in spreadsheets.</p>
+        </div>
+        <div class="cat-cards">
+          <div class="auto-card glass">
+            <h4>Cold Email & Outreach Engine</h4>
+            <p>Prospect research, personalised email writing, open/reply tracking, auto follow-ups.</p>
+            <span class="freed">10–12 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Sales Pipeline Automation</h4>
+            <p>Lead qualification, CRM organisation, follow-up scheduling, hot prospect flags.</p>
+            <span class="freed">8–10 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>LinkedIn Outreach</h4>
+            <p>Finds prospects, personalised connection requests, auto-follows up on new connections.</p>
+            <span class="freed">5–7 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Proposal & Contract Generator</h4>
+            <p>Auto-creates proposals from templates, customises for each client, fills in details.</p>
+            <span class="freed">3–4 HRS SAVED / WEEK</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category reveal">
+        <div class="cat-head">
+          <div class="cat-num">COMMUNICATION</div>
+          <h3>Communication</h3>
+          <p>Your team answers in minutes what used to take hours — across email, WhatsApp and SMS.</p>
+        </div>
+        <div class="cat-cards">
+          <div class="auto-card glass">
+            <h4>Email Marketing Automation</h4>
+            <p>Welcome sequences, nurture campaigns, win-back flows, copy writing, conversion tracking.</p>
+            <span class="freed">3–5 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Email Response Assistant</h4>
+            <p>Reads incoming emails, drafts replies to common questions, prepares for approval.</p>
+            <span class="freed">4–6 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>WhatsApp Business Automation</h4>
+            <p>Auto-replies to common questions, instant 24/7 responses, escalates complex issues.</p>
+            <span class="freed">3–4 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>SMS Auto-Response</h4>
+            <p>Instant SMS replies, order updates, notifications, customer support.</p>
+            <span class="freed">2–3 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Broadcast Generator</h4>
+            <p>Personalised broadcast messages for bulk outreach, manages subscriber lists.</p>
+            <span class="freed">2–3 HRS SAVED / WEEK</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category reveal">
+        <div class="cat-head">
+          <div class="cat-num">CONTENT & SEO</div>
+          <h3>Content & SEO</h3>
+          <p>Your employee approves what's good, you publish what's great. The blank page is gone.</p>
+        </div>
+        <div class="cat-cards">
+          <div class="auto-card glass">
+            <h4>Blog & SEO Engine</h4>
+            <p>Researches topics, writes optimised posts, schedules publishing, tracks traffic.</p>
+            <span class="freed">6–9 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Video Script & Brief Generator</h4>
+            <p>Writes scripts for YouTube/TikTok/Reels with timing and shot descriptions.</p>
+            <span class="freed">3–4 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Product Description Writer</h4>
+            <p>Writes e-commerce product copy at scale, multiple angles, auto-formats for platforms.</p>
+            <span class="freed">2–3 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Caption Generator</h4>
+            <p>Weekly captions and hooks, hashtag research, posting schedule.</p>
+            <span class="freed">3–4 HRS SAVED / WEEK</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category reveal">
+        <div class="cat-head">
+          <div class="cat-num">SUPPORT</div>
+          <h3>Customer Support</h3>
+          <p>We handle 60–70% of incoming questions automatically. Your team handles the rest in half the time.</p>
+        </div>
+        <div class="cat-cards">
+          <div class="auto-card glass">
+            <h4>Intelligent Support System</h4>
+            <p>Answers 60–70% of common questions instantly, escalates complex ones, learns from feedback.</p>
+            <span class="freed">5–8 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Feedback & Review Analyzer</h4>
+            <p>Reads reviews, categorises issues, extracts themes, suggests product improvements.</p>
+            <span class="freed">2–3 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Complaint Escalation</h4>
+            <p>Identifies urgent complaints, routes to right person, tracks resolution.</p>
+            <span class="freed">2–3 HRS SAVED / WEEK</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category reveal">
+        <div class="cat-head">
+          <div class="cat-num">DATA</div>
+          <h3>Data & Analytics</h3>
+          <p>Answers in minutes — not two days lost in Excel. Your data finally talks back.</p>
+        </div>
+        <div class="cat-cards">
+          <div class="auto-card glass">
+            <h4>Excel Analysis Engine</h4>
+            <p>Auto-analyses any sheet, creates pivot tables, generates insights, builds visual reports.</p>
+            <span class="freed">6–8 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Database Cleanup</h4>
+            <p>Finds duplicates, standardises formatting, identifies missing data, auto-corrects errors.</p>
+            <span class="freed">4–6 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Website Analytics</h4>
+            <p>Pulls weekly Google Analytics, compares periods, flags drops and spikes, writes insights.</p>
+            <span class="freed">2–3 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Cross-Platform Sync</h4>
+            <p>Syncs customer data between CRM, email and ads platforms — no manual exports.</p>
+            <span class="freed">3–4 HRS SAVED / WEEK</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="category reveal">
+        <div class="cat-head">
+          <div class="cat-num">OPERATIONS</div>
+          <h3>Operations</h3>
+          <p>The full picture, in minutes. Reports, intelligence, billing, meetings — handled.</p>
+        </div>
+        <div class="cat-cards">
+          <div class="auto-card glass">
+            <h4>Weekly BI Report</h4>
+            <p>Pulls data from all platforms, creates dashboards, writes insights, flags opportunities.</p>
+            <span class="freed">2–3 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Competitor Tracker</h4>
+            <p>Monitors competitors weekly, tracks pricing changes, watches messaging and offers.</p>
+            <span class="freed">3–4 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Billing & Invoice Automation</h4>
+            <p>Generates invoices, tracks payments, sends reminders, updates records.</p>
+            <span class="freed">2–3 HRS SAVED / WEEK</span>
+          </div>
+          <div class="auto-card glass">
+            <h4>Meeting Transcription</h4>
+            <p>Transcribes meetings, writes summaries, extracts to-dos, assigns ownership.</p>
+            <span class="freed">1–2 HRS SAVED / WEEK</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE 2 -->
+<section class="pull-quote">
+  <p class="pq-text reveal">SAME PERSON.<br>SAME SALARY.<br><span class="accent">2× OUTPUT.</span></p>
+</section>
+<!-- TIGER BREAK 2: EYES — pure cinematic, no overlay -->
+<section class="tiger-break">
+  <div class="tb-media">
+    <video autoplay loop muted playsinline poster="assets/tiger_eyes.webp" preload="metadata">
+      <source src="assets/tiger_eyes.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how section-glass">
+  <div class="container">
+    <div class="how-header">
+      <span class="section-eyebrow reveal">HOW IT WORKS</span>
+      <h2 class="reveal">FOUR STEPS.<br>FOREVER FREED-UP TIME.</h2>
+    </div>
+    <div class="steps">
+      <div class="step glass reveal">
+        <h4>YOUR MAC, YOUR DATA</h4>
+        <p>Everything runs locally on your Apple Silicon Mac. Nothing in the cloud, nothing leaves your office.</p>
+        <span class="note">M1 OR LATER · 16 GB MIN</span>
+      </div>
+      <div class="step glass reveal reveal-delay-1">
+        <h4>WE BUILD YOUR STACK</h4>
+        <p>We come on-site, scope the right automations for your business, and build them. 1–2 weeks per stack.</p>
+      </div>
+      <div class="step glass reveal reveal-delay-2">
+        <h4>20–48 HRS BACK</h4>
+        <p>Your employee gets that time back immediately. Same person, same salary, more strategic work.</p>
+      </div>
+      <div class="step glass reveal reveal-delay-3">
+        <h4>YOU OWN IT</h4>
+        <p>You own the system. We've handed you the keys. No subscription locks, no cloud hostage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing section-glass">
+  <div class="container">
+    <div class="pricing-header">
+      <span class="section-eyebrow reveal">PRICING</span>
+      <h2 class="reveal">HONEST,<br>UPFRONT, ONE-TIME.</h2>
+      <div class="anchor reveal"><span class="rupee">₹</span>30,000</div>
+      <div class="anchor-sub reveal">STARTING ALL-IN · YOUR FIRST AUTOMATION</div>
+    </div>
+    <div class="price-grid">
+      <div class="price-card glass reveal">
+        <div class="label">SETUP</div>
+        <div class="amount">₹25,000<span class="unit"> · one-time</span></div>
+        <div class="desc">On-site installation, scoping and setup. Paid once.</div>
+      </div>
+      <div class="price-card glass reveal reveal-delay-1">
+        <div class="label">PER AUTOMATION</div>
+        <div class="amount">₹5,000<span class="unit"> · each</span></div>
+        <div class="desc">Each fully built, zero-click automation you choose to run.</div>
+      </div>
+      <div class="price-card glass reveal reveal-delay-2">
+        <div class="label">AI MODELS</div>
+        <div class="amount">₹2,000<span class="unit"> /month</span></div>
+        <div class="desc">Standard model usage. Higher for very complex stacks — quoted upfront.</div>
+      </div>
+      <div class="price-card glass reveal reveal-delay-3">
+        <div class="label">3RD-PARTY</div>
+        <div class="amount">As needed<span class="unit"></span></div>
+        <div class="desc">Plugins or services your specific automation needs. Quoted before you commit.</div>
+      </div>
+    </div>
+    <div class="price-note glass reveal">
+      <strong>Always transparent.</strong> Once we understand your business, you receive a full costing breakdown before any work starts. No surprise invoices.
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE 3 -->
+<section class="pull-quote">
+  <p class="pq-text reveal">CURIOUS BUT UNSURE?<br><span class="accent">TELL US ABOUT YOUR BUSINESS.</span></p>
+</section>
+<!-- TIGER BREAK 3: CROUCH — pure cinematic, no overlay -->
+<section class="tiger-break">
+  <div class="tb-media">
+    <video autoplay loop muted playsinline poster="assets/tiger_crouch.webp" preload="metadata">
+      <source src="assets/tiger_crouch.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<!-- BEYOND -->
+<section class="beyond section-glass">
+  <div class="container">
+    <div class="beyond-header">
+      <span class="section-eyebrow reveal">BEYOND AUTOMATIONS</span>
+      <h2 class="reveal">WE ALSO BUILD.</h2>
+    </div>
+    <div class="beyond-grid">
+      <div class="beyond-card glass reveal">
+        <h4>Custom HTML Websites</h4>
+        <p>Fully bespoke websites built from scratch — no templates, no page builders. Tell us what you want and we'll send a quote.</p>
+        <div class="price-line">QUOTED ON SCOPE</div>
+      </div>
+      <div class="beyond-card glass reveal reveal-delay-1">
+        <h4>Apps & AI Tools</h4>
+        <p>Internal tools, customer-facing apps, custom AI utilities — built end-to-end for your specific business problem.</p>
+        <div class="price-line">QUOTED ON SCOPE</div>
+      </div>
+      <div class="beyond-card glass reveal reveal-delay-2">
+        <h4>Custom Voice Agents</h4>
+        <p>Fully custom voice agents that pick up calls, qualify leads, take orders, and route the rest to a human.</p>
+        <div class="price-line">QUOTED ON SCOPE</div>
+      </div>
+      <div class="beyond-card glass reveal reveal-delay-3">
+        <h4>AI Training for Employees</h4>
+        <p>On-site training so your team knows how to actually use AI day-to-day — not just hear about it on LinkedIn.</p>
+        <div class="price-line">QUOTED ON SCOPE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq section-glass">
+  <div class="container">
+    <div class="faq-header">
+      <span class="section-eyebrow reveal">QUESTIONS</span>
+      <h2 class="reveal">THE QUICK ANSWERS.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item glass reveal">
+        <summary>What are automations? <span class="plus">+</span></summary>
+        <div class="answer">Automations are pre-programmed actions that run on their own — at the right time, on the right trigger, with no one clicking anything. <strong>Zero clicks.</strong> The work just happens.</div>
+      </details>
+      <details class="faq-item glass reveal">
+        <summary>How can automations help my business? <span class="plus">+</span></summary>
+        <div class="answer">Automations increase efficiency. Once set up, they work without human interference — 24/7. Tasks that needed five people can now be handled by just one. Your team stops doing busywork and starts doing the work that actually grows the business.</div>
+      </details>
+      <details class="faq-item glass reveal">
+        <summary>What kind of computer do I need? <span class="plus">+</span></summary>
+        <div class="answer">An <strong>Apple Silicon Mac (M1 or later) with 16 GB of memory minimum.</strong> Currently we set up using Claude, which only ships a Mac app — so a compatible Mac is required. We'll confirm your specific machine works during the scoping call before any commitment.</div>
+      </details>
+      <details class="faq-item glass reveal">
+        <summary>Where do you operate? <span class="plus">+</span></summary>
+        <div class="answer">We currently service <strong>Ahmedabad, Vadodara and Surat</strong>. All setups are done in person, on your location. We bring the build to you.</div>
+      </details>
+      <details class="faq-item glass reveal">
+        <summary>What if my workflow isn't on your list? <span class="plus">+</span></summary>
+        <div class="answer">The list above is just a starting point. We <strong>build fully custom zero-click automations</strong> for whatever your business actually does — even if it's nothing on this page. Tell us the workflow, we'll tell you how we'd automate it.</div>
+      </details>
+      <details class="faq-item glass reveal">
+        <summary>What's the total cost going to look like? <span class="plus">+</span></summary>
+        <div class="answer">It depends on how many automations you want and whether any need third-party plugins. We give you a <strong>full itemised quote before any work starts</strong> — no surprise invoices. The starting point is around ₹30,000 all-in for setup plus your first automation.</div>
+      </details>
+      <details class="faq-item glass reveal">
+        <summary>How long does it take? <span class="plus">+</span></summary>
+        <div class="answer">A typical stack takes <strong>1–2 weeks</strong> from kickoff to live. Bigger or more complex builds take longer — we'll tell you the timeline upfront.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-card">
+    <span class="section-eyebrow reveal">GET STARTED</span>
+    <h2 class="reveal">LET'S BUILD YOUR<br><span class="ice">FIRST AUTOMATION.</span></h2>
+    <p class="sub reveal">Schedule a call. Tell us about your business. We'll tell you every way we can integrate AI into it — and what it will cost. No spam, no funnel, no nonsense.</p>
+    <div class="contact-cta reveal">
+      <a href="https://wa.me/919104088116" class="btn btn-primary">WHATSAPP US</a>
+      <a href="tel:+919104088116" class="btn btn-secondary">CALL US</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo"><span class="logo-dot"></span>WHITE&nbsp;TIGER</div>
+  <p>Zero Click AI Automations · Ahmedabad · Vadodara · Surat</p>
+  <p class="copyright">© 2026 White Tiger AI</p>
+</footer>
+
+<script>
+/* ========================================================
+   GLOBAL CURSOR TRACKING
+   ======================================================== */
+(function(){
+  const root = document.documentElement;
+  let tx = window.innerWidth/2, ty = window.innerHeight/2;
+  let cx = tx, cy = ty;
+
+  function move(e){
+    const p = e.touches ? e.touches[0] : e;
+    tx = p.clientX; ty = p.clientY;
+  }
+  window.addEventListener('mousemove', move, { passive: true });
+  window.addEventListener('touchmove', move, { passive: true });
+
+  function loop(){
+    // Smooth follow
+    cx += (tx - cx) * 0.12;
+    cy += (ty - cy) * 0.12;
+    root.style.setProperty('--cx', cx + 'px');
+    root.style.setProperty('--cy', cy + 'px');
+    root.style.setProperty('--cxn', (cx / window.innerWidth).toFixed(4));
+    root.style.setProperty('--cyn', (cy / window.innerHeight).toFixed(4));
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ========================================================
+   PER-ELEMENT GLASS SHEEN (cursor-follow on each glass card)
+   ======================================================== */
+(function(){
+  const els = document.querySelectorAll('.glass, .btn, .contact-card');
+  els.forEach(el => {
+    el.addEventListener('pointermove', (e)=>{
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+    el.addEventListener('pointerleave', ()=>{
+      el.style.setProperty('--mx', '-200px');
+      el.style.setProperty('--my', '-200px');
+    });
+  });
+})();
+
+/* ========================================================
+   SNOW PARTICLES — wind affected by cursor velocity
+   ======================================================== */
+(function(){
+  const canvas = document.getElementById('snow');
+  const ctx = canvas.getContext('2d');
+  let W, H, flakes = [], wind = 0, lastX = 0, lastT = performance.now();
+  const COUNT = window.innerWidth < 700 ? 35 : 80;
+
+  function resize(){
+    W = canvas.width = window.innerWidth * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    W = window.innerWidth; H = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', () => {
+    canvas.width = canvas.width;  // reset transform
+    resize();
+  });
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+
+  for(let i=0; i<COUNT; i++){
+    flakes.push({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: rand(0.6, 2.6),
+      vy: rand(0.25, 1.1),
+      vx: rand(-0.25, 0.25),
+      drift: rand(0, Math.PI*2),
+      driftSpeed: rand(0.005, 0.015),
+      alpha: rand(0.5, 0.95)
+    });
+  }
+
+  window.addEventListener('mousemove', (e)=>{
+    const now = performance.now();
+    const dt = Math.max(now - lastT, 1);
+    const dx = e.clientX - lastX;
+    wind += (dx / dt) * 0.4;
+    wind *= 0.92; // damp
+    lastX = e.clientX;
+    lastT = now;
+  }, { passive: true });
+
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    wind *= 0.96; // continuous damping
+    for(const f of flakes){
+      f.y += f.vy;
+      f.drift += f.driftSpeed;
+      f.x += f.vx + Math.sin(f.drift)*0.4 + wind * 0.15;
+      if(f.y > H+5){ f.y = -5; f.x = Math.random()*W; }
+      if(f.x > W+5) f.x = -5;
+      if(f.x < -5) f.x = W+5;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${f.alpha})`;
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = 'rgba(180,210,235,0.6)';
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ========================================================
+   REVEAL ON SCROLL
+   ======================================================== */
+(function(){
+  const items = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  items.forEach(i => io.observe(i));
+})();
+
+/* ========================================================
+   HERO TIGER — scroll parallax + scale
+   ======================================================== */
+(function(){
+  const tiger = document.getElementById('heroTiger');
+  if(!tiger) return;
+  const media = tiger.querySelector('video, img');
+  if(!media) return;
+  let ticking = false;
+
+  function update(){
+    const y = window.scrollY;
+    const winH = window.innerHeight;
+    const progress = Math.min(y / (winH * 0.9), 1);
+    const scale = 1 + progress * 0.08;
+    const translate = progress * -40;
+    media.style.transform = `translate3d(var(--hero-shift-x), calc(var(--hero-shift-y) + ${translate}px), 0) scale(${scale})`;
+    ticking = false;
+  }
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
+
+/* ========================================================
+   TIGER BREAK PARALLAX + PLAY/PAUSE WHEN OFF-SCREEN
+   Videos are boomerang loops (forward + reverse encoded
+   into one file), so native HTML loop attribute handles
+   seamless looping without any JS choreography.
+   ======================================================== */
+(function(){
+  const breaks = document.querySelectorAll('.tiger-break');
+  let ticking = false;
+
+  function update(){
+    const winH = window.innerHeight;
+    breaks.forEach(b=>{
+      const rect = b.getBoundingClientRect();
+      if(rect.bottom < 0 || rect.top > winH) return;
+      const media = b.querySelector('.tb-media');
+      if(!media) return;
+      const center = rect.top + rect.height/2;
+      const offset = (winH/2 - center) * 0.18;
+      const cxShift = `calc((var(--cxn) - 0.5) * 28px)`;
+      const cyShift = `calc((var(--cyn) - 0.5) * 18px + ${offset}px)`;
+      media.style.transform = `translate3d(${cxShift}, ${cyShift}, 0) scale(1.10)`;
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+
+  // Start preloading videos before they enter view, pause when off-screen.
+  // Larger rootMargin gives the browser a head-start downloading.
+  const playObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      const v = e.target.querySelector('video');
+      if(!v) return;
+      if(e.isIntersecting){
+        // Bump preload up so video data is fetched as user approaches
+        if(v.preload !== 'auto') v.preload = 'auto';
+        const p = v.play();
+        if(p && p.catch) p.catch(()=>{});
+      } else {
+        v.pause();
+      }
+    });
+  }, { threshold: 0, rootMargin: '400px 0px' });
+  breaks.forEach(b => playObserver.observe(b));
+})();
+
+/* ========================================================
+   NAV — shrink on scroll
+   ======================================================== */
+(function(){
+  const nav = document.querySelector('nav');
+  let last = 0;
+  window.addEventListener('scroll', ()=>{
+    const y = window.scrollY;
+    if(y > 60 && last <= 60){ nav.style.padding = '8px 10px 8px 18px'; }
+    else if(y <= 60 && last > 60){ nav.style.padding = ''; }
+    last = y;
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
