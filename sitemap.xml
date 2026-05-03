@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://whitetigerai.in/</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://whitetigerai.in/assets/og-image.jpg</image:loc>
+      <image:title>White Tiger AI Automations &amp; Services</image:title>
+      <image:caption>AI automation services in Ahmedabad, Vadodara and Surat</image:caption>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://whitetigerai.in/assets/og-image.jpg</video:thumbnail_loc>
+      <video:title>White Tiger AI — Hero Animation</video:title>
+      <video:description>Cinematic white tiger animation introducing White Tiger AI Automation Services in Ahmedabad, Vadodara and Surat.</video:description>
+      <video:content_loc>https://whitetigerai.in/assets/tiger_hero.mp4</video:content_loc>
+      <video:duration>10</video:duration>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+</urlset>
