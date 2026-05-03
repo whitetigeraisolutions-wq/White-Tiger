@@ -211,6 +211,10 @@
 }
 </script>
 
+<!-- Critical resource hints — get the hero showing as fast as possible -->
+<link rel="preload" as="image" href="assets/tiger_hero_b.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="video" href="assets/tiger_hero.mp4" type="video/mp4" fetchpriority="high">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
@@ -417,7 +421,9 @@ body {
 
 /* SMALLER CARDS — calm, static glass with a barely-there brand tint.
    No orbiting halo animation. Mostly white with a soft brand-blue hint
-   so the cards sit quietly and the content does the talking. */
+   so the cards sit quietly and the content does the talking.
+   contain: layout style paint isolates each card from affecting the
+   rest of the page when scrolling, which significantly improves paint perf. */
 .auto-card.glass,
 .step.glass,
 .price-card.glass,
@@ -428,6 +434,7 @@ body {
   animation: none;
   background: rgba(248, 252, 255, 0.78);
   border: 1px solid rgba(174, 224, 245, 0.42);
+  contain: layout style paint;
   box-shadow:
     0 8px 22px -10px rgba(20, 60, 100, 0.10),
     0 0 14px -2px rgba(95, 184, 224, 0.16),
@@ -1624,7 +1631,7 @@ section h2,
 <!-- TIGER BREAK 1: PROWL — pure cinematic, no overlay -->
 <section class="tiger-break">
   <div class="tb-media">
-    <video autoplay loop muted playsinline poster="assets/tiger_prowl.webp" preload="metadata">
+    <video autoplay loop muted playsinline poster="assets/tiger_prowl.webp" preload="none">
       <source src="assets/tiger_prowl.mp4" type="video/mp4">
     </video>
   </div>
@@ -1862,7 +1869,7 @@ section h2,
 <!-- TIGER BREAK 2: EYES — pure cinematic, no overlay -->
 <section class="tiger-break">
   <div class="tb-media">
-    <video autoplay loop muted playsinline poster="assets/tiger_eyes.webp" preload="metadata">
+    <video autoplay loop muted playsinline poster="assets/tiger_eyes.webp" preload="none">
       <source src="assets/tiger_eyes.mp4" type="video/mp4">
     </video>
   </div>
@@ -1941,7 +1948,7 @@ section h2,
 <!-- TIGER BREAK 3: CROUCH — pure cinematic, no overlay -->
 <section class="tiger-break">
   <div class="tb-media">
-    <video autoplay loop muted playsinline poster="assets/tiger_crouch.webp" preload="metadata">
+    <video autoplay loop muted playsinline poster="assets/tiger_crouch.webp" preload="none">
       <source src="assets/tiger_crouch.mp4" type="video/mp4">
     </video>
   </div>
@@ -2092,7 +2099,7 @@ section h2,
   const canvas = document.getElementById('snow');
   const ctx = canvas.getContext('2d');
   let W, H, flakes = [], wind = 0, lastX = 0, lastT = performance.now();
-  const COUNT = window.innerWidth < 700 ? 35 : 80;
+  const COUNT = window.innerWidth < 700 ? 22 : 50;
 
   function resize(){
     W = canvas.width = window.innerWidth * devicePixelRatio;
@@ -2146,8 +2153,6 @@ section h2,
       ctx.beginPath();
       ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
       ctx.fillStyle = `rgba(255,255,255,${f.alpha})`;
-      ctx.shadowBlur = 6;
-      ctx.shadowColor = 'rgba(180,210,235,0.6)';
       ctx.fill();
     }
     requestAnimationFrame(tick);
