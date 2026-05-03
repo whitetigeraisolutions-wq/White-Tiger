@@ -232,21 +232,36 @@ body {
   100%  { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  0 -2px 7px 0 rgba(174,224,245,0.75),  0 2px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
 }
 
-/* MORE TRANSPARENT SMALL CARDS — let the brand color flow through */
+/* SMALLER CARDS — calm, static glass with a barely-there brand tint.
+   No orbiting halo animation. Mostly white with a soft brand-blue hint
+   so the cards sit quietly and the content does the talking. */
 .auto-card.glass,
-.faq-item.glass,
 .step.glass,
 .price-card.glass,
 .beyond-card.glass,
+.faq-item.glass,
+.big-stat-card.glass,
 .caveat.glass {
-  background: rgba(255, 255, 255, 0.32);
+  animation: none;
+  background: rgba(248, 252, 255, 0.78);
+  border: 1px solid rgba(174, 224, 245, 0.42);
+  box-shadow:
+    0 8px 22px -10px rgba(20, 60, 100, 0.10),
+    0 0 14px -2px rgba(95, 184, 224, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(120, 145, 170, 0.05);
 }
 .auto-card.glass:hover,
-.faq-item.glass:hover,
 .step.glass:hover,
 .price-card.glass:hover,
-.beyond-card.glass:hover {
-  background: rgba(255, 255, 255, 0.55);
+.beyond-card.glass:hover,
+.big-stat-card.glass:hover {
+  background: rgba(252, 255, 255, 0.92);
+  border-color: rgba(95, 184, 224, 0.65);
+  box-shadow:
+    0 14px 32px -10px rgba(20, 60, 100, 0.16),
+    0 0 22px -2px rgba(95, 184, 224, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
 }
 
 /* SECTION GLASS — large frosted panel that fades softly into the page
@@ -1032,13 +1047,8 @@ h2 .ice {
 }
 .faq-item summary::-webkit-details-marker { display: none; }
 /* FAQ items use static glass — no orbiting halo, calmer for reading */
-.faq-item.glass {
-  animation: none;
-  box-shadow: var(--glass-shadow);
-}
-.faq-item.glass:hover {
-  animation: none;
-}
+/* FAQ items now share the unified smaller-card style above (no animation,
+   soft brand tint). This block previously held the per-rule overrides. */
 
 /* Plus icon — drawn from two centered pseudo-element bars
    so the cross is mathematically aligned regardless of font. */
@@ -1223,18 +1233,48 @@ footer .copyright { margin-top: 14px; font-size: 11px; opacity: 0.5; }
   nav { padding: 8px 8px 8px 16px; top: 10px; }
   .logo { font-size: 14px; letter-spacing: 0.12em; }
   .nav-cta { padding: 8px 14px; font-size: 11px; letter-spacing: 0.1em; }
-  section { padding: 90px 18px; }
-  .hero { padding-top: 90px; }
-  .hero-content { margin-top: -20px; }
-  .category { grid-template-columns: 1fr; gap: 24px; }
+
+  /* Tighter vertical rhythm everywhere on mobile */
+  section { padding: 56px 18px; }
+  .hero { padding-top: 80px; padding-bottom: 30px; min-height: auto; }
+  .hero-content { margin-top: -8px; }
+  .pull-quote { padding: 32px 18px 24px; }
+  .tiger-break { height: 56vh; min-height: 360px; margin-top: 0; }
+  .contact { padding: 70px 18px; }
+
+  /* Section headers — pull content closer */
+  .automations-header { margin-bottom: 28px; }
+  .how-header,
+  .pricing-header,
+  .beyond-header,
+  .faq-header { margin-bottom: 36px; }
+  .cat-grid { margin-top: 30px; gap: 36px; }
+  .big-stat-card { margin-top: 36px; padding: 32px 24px; }
+  .pricing-header .anchor { margin-top: 22px; }
+
+  /* Layout */
+  .category { grid-template-columns: 1fr; gap: 22px; }
   .steps { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .price-grid { grid-template-columns: repeat(2, 1fr); }
   .beyond-grid { grid-template-columns: 1fr; }
-  .tiger-break { height: 75vh; min-height: 460px; }
   .tiger-break blockquote { padding: 28px 24px; margin: 0 16px; }
   .hero-cities { font-size: 11px; gap: 10px; letter-spacing: 0.3em; }
   .hero-cities::before, .hero-cities::after { width: 24px; }
-  .contact-card { padding: 60px 28px; border-radius: 28px; }
+  .contact-card { padding: 50px 26px; border-radius: 26px; }
+
+  /* Hero text breathing room */
+  .hero-tagline { margin-top: 18px; }
+  .hero-cta { margin-top: 28px; }
+  .hero-cities { margin-top: 24px; }
+
+  /* Section-glass panel feathered inset on mobile — let it almost touch
+     the section edges so content has more usable space inside. */
+  .section-glass::before {
+    -webkit-mask-image: linear-gradient(180deg,
+      transparent 0%, rgba(0,0,0,0.6) 5%, black 14%, black 86%, rgba(0,0,0,0.6) 95%, transparent 100%);
+    mask-image: linear-gradient(180deg,
+      transparent 0%, rgba(0,0,0,0.6) 5%, black 14%, black 86%, rgba(0,0,0,0.6) 95%, transparent 100%);
+  }
 }
 @media (max-width: 700px) {
   /* Force the hero headline onto a single line on mobile */
