@@ -395,18 +395,7 @@ body {
   animation: brandHalo 7s linear infinite;
 }
 
-/* Buttons / nav — same 8-position orbit, smaller scale */
-@keyframes brandHaloSmall {
-  0%    { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 -2px 7px 0 rgba(174,224,245,0.80),  0 2px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-  12.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  1.5px -1.5px 7px 0 rgba(174,224,245,0.80),  -1.5px 1.5px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-  25%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  2px 0 7px 0 rgba(174,224,245,0.80),  -2px 0 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-  37.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  1.5px 1.5px 7px 0 rgba(174,224,245,0.80),  -1.5px -1.5px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-  50%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 2px 7px 0 rgba(174,224,245,0.80),  0 -2px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-  62.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -1.5px 1.5px 7px 0 rgba(174,224,245,0.80),  1.5px -1.5px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-  75%   { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -2px 0 7px 0 rgba(174,224,245,0.80),  2px 0 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-  87.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  -1.5px -1.5px 7px 0 rgba(174,224,245,0.80),  1.5px 1.5px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-  100%  { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.25), 0 0 10px 1px rgba(95,184,224,0.45), inset 0 0 0 1px rgba(95,184,224,0.30),  0 -2px 7px 0 rgba(174,224,245,0.80),  0 2px 7px 0 rgba(174,224,245,0.65), inset 0 1px 0 rgba(255,255,255,0.30); }
-}
+/* Buttons / nav use brandHaloLight (smaller-scale orbit, lighter) */
 @keyframes brandHaloLight {
   0%    { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  0 -2px 7px 0 rgba(174,224,245,0.75),  0 2px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
   12.5% { box-shadow: 0 6px 18px -6px rgba(20,50,80,0.15), 0 0 10px 1px rgba(95,184,224,0.40), inset 0 0 0 1px rgba(95,184,224,0.28),  1.5px -1.5px 7px 0 rgba(174,224,245,0.75),  -1.5px 1.5px 7px 0 rgba(174,224,245,0.60), inset 0 1px 0 rgba(255,255,255,0.85); }
@@ -638,19 +627,6 @@ nav {
   color: var(--ink);
   text-transform: uppercase;
 }
-.hero-content h1 .ice {
-  background: linear-gradient(110deg, var(--brand-bright) 0%, var(--brand-deep) 50%, var(--brand-bright) 100%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: brandShine 6s linear infinite;
-  display: inline-block;
-}
-@keyframes brandShine {
-  0%   { background-position: 220% 0%; }
-  100% { background-position: -120% 0%; }
-}
 .hero-tagline {
   margin: 26px auto 0;
   font-size: clamp(15px, 1.4vw, 19px);
@@ -785,15 +761,6 @@ h2 {
   color: var(--ink);
   text-transform: uppercase;
 }
-h2 .ice {
-  background: linear-gradient(110deg, var(--brand-bright), var(--brand-deep), var(--brand-bright));
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: brandShine 6s linear infinite;
-}
-
 /* ========================================================
    PROBLEM
    ======================================================== */
@@ -862,15 +829,6 @@ h2 .ice {
   max-width: 1100px;
   margin: 0 auto;
 }
-.pull-quote .accent {
-  background: linear-gradient(110deg, var(--brand-bright), var(--brand-deep), var(--brand-bright));
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: brandShine 6s linear infinite;
-}
-
 /* ========================================================
    TIGER BREAK SECTIONS — pure cinematic full-bleed video, NO overlay
    ======================================================== */
@@ -1140,40 +1098,14 @@ h2 .ice {
   .cat-modal-head h3 { font-size: 24px; }
   .cat-modal .cat-cards { grid-template-columns: 1fr; }
 }
-.category {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 50px;
-  align-items: start;
-}
-.cat-head .cat-num {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  color: var(--brand-deep);
-  font-weight: 700;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-/* Smaller card titles across the site — very subtle, almost-white
-   with just a hint of brand blue. A barely-there lighter band
-   sweeps across so there's still life, but readability of the
-   surrounding small text stays the priority. Applied to category
-   titles in What We Automate, Beyond Automations card titles, and
-   FAQ question rows. */
-.cat-head h3,
+/* Subtle sweeping shimmer on Beyond Automations card titles + FAQ question rows */
 .beyond-card h4,
 .faq-item summary {
   font-family: 'Archivo Black', sans-serif;
   text-transform: uppercase;
   background: linear-gradient(115deg,
-    #8fc4dc 0%,
-    #8fc4dc 38%,
-    #b6d8ec 47%,
-    #d8eaf3 50%,
-    #b6d8ec 53%,
-    #8fc4dc 62%,
-    #8fc4dc 100%);
+    #8fc4dc 0%, #8fc4dc 38%, #b6d8ec 47%, #d8eaf3 50%,
+    #b6d8ec 53%, #8fc4dc 62%, #8fc4dc 100%);
   background-size: 320% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1182,20 +1114,9 @@ h2 .ice {
   animation: catHeadSweep 16s linear infinite;
   filter: none;
 }
-.cat-head h3 {
-  font-size: 28px;
-  line-height: 1.05;
-  letter-spacing: -0.012em;
-}
 @keyframes catHeadSweep {
   0%   { background-position: 280% 0%; }
   100% { background-position: -180% 0%; }
-}
-.cat-head p {
-  margin-top: 16px;
-  font-size: 14.5px;
-  color: var(--ink-3);
-  line-height: 1.6;
 }
 .cat-cards {
   display: grid;
@@ -1301,14 +1222,6 @@ h2 .ice {
   font-size: clamp(50px, 7.5vw, 100px);
   letter-spacing: -0.035em;
   line-height: 1;
-}
-.pricing-header .anchor .rupee {
-  background: linear-gradient(110deg, var(--brand-bright), var(--brand-deep), var(--brand-bright));
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: brandShine 6s linear infinite;
 }
 .pricing-header .anchor-sub {
   margin-top: 14px;
@@ -1536,14 +1449,6 @@ h2 .ice {
   max-width: 1000px;
   margin: 0 auto;
 }
-.contact h2 .ice {
-  background: linear-gradient(110deg, var(--brand-pale), var(--brand-bright), var(--brand-pale));
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: brandShine 6s linear infinite;
-}
 .contact .sub {
   margin-top: 28px;
   color: #b8c2cc;
@@ -1647,7 +1552,6 @@ footer .copyright { margin-top: 14px; font-size: 11px; opacity: 0.5; }
   .pricing-header .anchor { margin-top: 22px; }
 
   /* Layout */
-  .category { grid-template-columns: 1fr; gap: 22px; }
   .steps { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .price-grid { grid-template-columns: repeat(2, 1fr); }
   .beyond-grid { grid-template-columns: 1fr; }
